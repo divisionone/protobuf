@@ -1,3 +1,3 @@
 package main
 
-import _ "github.com/micro/protobuf/protoc-gen-go/micro"
+import _ "github.com/divisionone/protobuf/protoc-gen-go/micro"

@@ -2748,31 +2748,41 @@ func CamelCase(s string) string {
 		t = append(t, 'X')
 		i++
 	}
-	// Invariant: if the next letter is lower case, it must be converted
-	// to upper case.
-	// That is, we process a word at a time, where words are marked by _ or
-	// upper case letter. Digits are treated as words.
-	for ; i < len(s); i++ {
-		c := s[i]
-		if c == '_' && i+1 < len(s) && isASCIILower(s[i+1]) {
-			continue // Skip the underscore in s.
-		}
-		if isASCIIDigit(c) {
-			t = append(t, c)
+
+	if len(s[i:]) == 0 {
+		return string(t)
+	}
+
+	parts := strings.Split(s[i:], "_")
+	for n, part := range parts {
+		if len(part) == 0 {
+			t = append(t, '_')
 			continue
 		}
-		// Assume we have a letter now - if not, it's a bogus identifier.
-		// The next word is a sequence of characters that must start upper case.
-		if isASCIILower(c) {
-			c ^= ' ' // Make it a capital letter.
+		if isASCIILower(part[0]) {
+			trailingS := strings.EqualFold(part[len(part)-1:], "s")
+			if trailingS {
+				part = part[:len(part)-1]
+			}
+			switch string(part) {
+			case "id", "url", "uri":
+				part = strings.ToUpper(part)
+			default:
+				part = strings.Title(part)
+			}
+			t = append(t, part...)
+			if trailingS {
+				t = append(t, 's')
+			}
+			continue
 		}
-		t = append(t, c) // Guaranteed not lower case.
-		// Accept lower case sequence that follows.
-		for i+1 < len(s) && isASCIILower(s[i+1]) {
-			i++
-			t = append(t, s[i])
+		if n > 0 {
+			t = append(t, []byte("_"+part)...)
+			continue
 		}
+		t = append(t, []byte(part)...)
 	}
+
 	return string(t)
 }
 

@@ -7,15 +7,15 @@ import (
 	"strings"
 
 	pb "github.com/golang/protobuf/protoc-gen-go/descriptor"
-	"github.com/golang/protobuf/protoc-gen-go/generator"
+	"github.com/divisionone/protobuf/protoc-gen-go/generator"
 )
 
 // Paths for packages used by code generated in this file,
 // relative to the import_prefix of the generator.Generator.
 const (
-	contextPkgPath = "golang.org/x/net/context"
-	clientPkgPath  = "github.com/micro/go-micro/client"
-	serverPkgPath  = "github.com/micro/go-micro/server"
+	contextPkgPath = "context"
+	clientPkgPath  = "github.com/divisionone/go-micro/client"
+	serverPkgPath  = "github.com/divisionone/go-micro/server"
 )
 
 func init() {
@@ -87,9 +87,10 @@ func (g *micro) GenerateImports(file *generator.FileDescriptor) {
 		return
 	}
 	g.P("import (")
+	g.P(contextPkg, " ", strconv.Quote(path.Join(g.gen.ImportPrefix, contextPkgPath)))
+	g.P("")
 	g.P(clientPkg, " ", strconv.Quote(path.Join(g.gen.ImportPrefix, clientPkgPath)))
 	g.P(serverPkg, " ", strconv.Quote(path.Join(g.gen.ImportPrefix, serverPkgPath)))
-	g.P(contextPkg, " ", strconv.Quote(path.Join(g.gen.ImportPrefix, contextPkgPath)))
 	g.P(")")
 	g.P()
 }

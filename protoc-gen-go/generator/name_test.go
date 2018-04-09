@@ -49,6 +49,10 @@ func TestCamelCase(t *testing.T) {
 		{"OneTwo", "OneTwo"},
 		{"_", "X"},
 		{"_a_", "XA_"},
+		{"foo_id", "FooID"},
+		{"foo_id_ball", "FooIDBall"},
+		{"foo_ids_ball", "FooIDsBall"},
+		{"foo_id_sball", "FooIDSball"},
 	}
 	for _, tc := range tests {
 		if got := CamelCase(tc.in); got != tc.want {

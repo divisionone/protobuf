@@ -41,7 +41,7 @@ import (
 	"strings"
 
 	pb "github.com/golang/protobuf/protoc-gen-go/descriptor"
-	"github.com/golang/protobuf/protoc-gen-go/generator"
+	"github.com/divisionone/protobuf/protoc-gen-go/generator"
 )
 
 // generatedCodeVersion indicates a version of the generated code.
@@ -53,7 +53,7 @@ const generatedCodeVersion = 4
 // Paths for packages used by code generated in this file,
 // relative to the import_prefix of the generator.Generator.
 const (
-	contextPkgPath = "golang.org/x/net/context"
+	contextPkgPath = "context"
 	grpcPkgPath    = "google.golang.org/grpc"
 )
 
